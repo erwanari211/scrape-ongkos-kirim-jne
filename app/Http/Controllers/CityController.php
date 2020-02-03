@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\City;
 use Illuminate\Http\Request;
+use RajaOngkir;
+use App\Models\Cost;
 
 class CityController extends Controller
 {
@@ -14,7 +16,8 @@ class CityController extends Controller
      */
     public function index()
     {
-        //
+        $cities = City::get();
+        return view('cities.index', compact('cities'));
     }
 
     /**
@@ -46,7 +49,41 @@ class CityController extends Controller
      */
     public function show(City $city)
     {
-        //
+        $time = 60 * 5;
+        ini_set('max_execution_time', $time);
+
+        $courier = request('courier') ? request('courier') : 'jne';
+
+        $page = request('page') ? request('page') : 1;
+        $limit = 100;
+        $skip = ($page - 1) * $limit;
+
+        $origin = $city;
+        $cities = City::take($limit)->skip($skip)->get();
+
+        if (count($cities)) {
+            foreach ($cities->chunk(10) as $chunk) {
+                foreach ($chunk as $item) {
+                    $destination = $item;
+                    $exist = Cost::isCityCostExist($origin->id, $destination->id, $courier);
+
+                    if (!$exist) {
+                        $cost = Cost::calculateCityCost($origin->id, $destination->id, $courier);
+                        dump([
+                            'from' => $origin->id,
+                            'to' => $destination->id
+                        ]);
+                        Cost::saveCityCost($origin->id, $destination->id, $courier, $cost);
+                    }
+                }
+            }
+
+            return redirect()->route('cities.show', [$city->id, 'page' => $page+1]);
+        } else {
+            $newCity = $city->id + 1;
+            dump('No destination');
+            return redirect()->route('cities.show', [$newCity]);
+        }
     }
 
     /**
