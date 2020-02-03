@@ -28,6 +28,10 @@
                         <a class="btn btn-info btn-sm" href="{{ route('cities.show', [$item->id]) }}">
                           Get Cost
                         </a>
+
+                        <a class="btn btn-success btn-sm" href="{{ route('cities.export', [$item->id]) }}">
+                          Export
+                        </a>
                       </td>
                       <td>{{ $item->province }}</td>
                       <td>

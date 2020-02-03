@@ -166,6 +166,7 @@ return [
          * Package Service Providers...
          */
         erfanbagussetiana\rajaongkirpro\RajaOngkirServiceProvider::class,
+        Maatwebsite\Excel\ExcelServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -228,6 +229,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
         'RajaOngkir' => erfanbagussetiana\rajaongkirpro\RajaOngkirFacade::class,
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
 
     ],
 

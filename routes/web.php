@@ -19,4 +19,5 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::get('cities/{city}/export', 'CityController@export')->name('cities.export');
 Route::resource('cities', 'CityController');

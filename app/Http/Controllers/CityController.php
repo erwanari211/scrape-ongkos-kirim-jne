@@ -6,6 +6,9 @@ use App\Models\City;
 use Illuminate\Http\Request;
 use RajaOngkir;
 use App\Models\Cost;
+use Excel;
+use App\Exports\FromCollectionWithViewExport;
+use App\Exports\FromCollectionWithViewMultipleSheetsExport;
 
 class CityController extends Controller
 {
@@ -118,5 +121,52 @@ class CityController extends Controller
     public function destroy(City $city)
     {
         //
+    }
+
+    public function export(City $city)
+    {
+        $excelData = [];
+        $filename = str_slug($city->type . ' ' . $city->name);
+
+        // get data
+        $city->load('costs');
+        $costs = $city->costs()->with('originCity', 'destinationCity')->get();
+        $services = $costs->unique('service')->pluck('service');
+
+        $groupedCosts = [];
+        foreach ($costs->chunk(50) as $chunk) {
+            foreach ($chunk as $item) {
+                $id = $item['origin'] . '-' . $item['destination'];
+                $data = [
+                    'origin' => $item['originCity'],
+                    'destination' => $item['destinationCity'],
+                ];
+                $service = $item['service'];
+                $groupedCosts[$id]['data'] = $data;
+                $groupedCosts[$id]['costs'][$service] = [
+                    'cost' => $item['cost'],
+                    'estimation' => $item['estimation'],
+                ];
+            }
+        }
+
+        $costs = collect($groupedCosts);
+
+        // display data
+        $view = 'cities.export';
+        $data = compact('city', 'costs', 'services');
+        // return view($view, $data);
+
+        // add to excel data
+        $excelData[$filename] = [
+            'sheetname' => $filename,
+            'view' => $view,
+            'data' => $data,
+        ];
+
+        $date = date('Ymd');
+        $randomString = str_random(8).'-'.time();
+        $filename = 'export-cost-'.$filename.'-'.$date.'-'.$randomString.'.xlsx';
+        return Excel::download(new FromCollectionWithViewMultipleSheetsExport($excelData), $filename);
     }
 }
