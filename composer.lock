@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "94d4bf9ac7f4a933030e46a346ee2917",
+    "content-hash": "de3eacc23c4b28ab10da8fd207c1ae37",
     "packages": [
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -279,6 +279,47 @@
                 "validator"
             ],
             "time": "2020-01-20T21:40:59+00:00"
+        },
+        {
+            "name": "erfanbagussetiana/rajaongkirpro",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/erfanbagussetiana/rajaongkirpro.git",
+                "reference": "e234e849e04d1c6fae8f8f3ebe55c3f3167faf04"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/erfanbagussetiana/rajaongkirpro/zipball/e234e849e04d1c6fae8f8f3ebe55c3f3167faf04",
+                "reference": "e234e849e04d1c6fae8f8f3ebe55c3f3167faf04",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "~5"
+            },
+            "type": "package",
+            "autoload": {
+                "psr-4": {
+                    "erfanbagussetiana\\rajaongkirpro\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "M. Erfan Bagus Setiana",
+                    "email": "erfanbagussetiana@gmail.com"
+                }
+            ],
+            "description": "Raja Ongkir API Laravel 5",
+            "keywords": [
+                "application programming interface",
+                "laravel",
+                "rajaongkir"
+            ],
+            "time": "2018-04-13T15:16:00+00:00"
         },
         {
             "name": "erusev/parsedown",
@@ -4729,7 +4770,9 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "erfanbagussetiana/rajaongkirpro": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

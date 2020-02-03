@@ -165,6 +165,7 @@ return [
         /*
          * Package Service Providers...
          */
+        erfanbagussetiana\rajaongkirpro\RajaOngkirServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -225,6 +226,8 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+
+        'RajaOngkir' => erfanbagussetiana\rajaongkirpro\RajaOngkirFacade::class,
 
     ],
 
